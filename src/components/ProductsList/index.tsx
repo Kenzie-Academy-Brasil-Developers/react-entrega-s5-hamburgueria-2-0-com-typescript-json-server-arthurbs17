@@ -1,4 +1,6 @@
 import { useProductsList } from "../../Providers/products";
+import ProductCard from "../ProductCard";
+import { Container, ContainerCard } from "./style";
 
 interface ProductTypeList {
   name: string;
@@ -13,18 +15,20 @@ const ProductsList = () => {
   console.log(productsList);
 
   return (
-    <div>
-      <ul>
+    <Container>
+      <ContainerCard>
         {productsList[0] &&
           productsList.map((product: ProductTypeList) => (
-            <li key={product.id}>
-              <img src={product.image} alt={product.name} />
-              <p>{product.name}</p>
-              <p>{product.price}</p>
-            </li>
+            <ProductCard
+              key={product.id}
+              name={product.name}
+              image={product.image}
+              category={product.category}
+              price={product.price}
+            />
           ))}
-      </ul>
-    </div>
+      </ContainerCard>
+    </Container>
   );
 };
 
