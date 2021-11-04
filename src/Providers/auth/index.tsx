@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem("token", response.data.accessToken);
         setAuthToken(response.data.accessToken);
         console.log(response.data);
-        history.push("/");
+        history.push("/home");
       })
       .catch((error) => console.log(error));
   };

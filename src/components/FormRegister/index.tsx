@@ -37,7 +37,7 @@ const FormRegister = () => {
       .post("/register", { email, password, firstname })
       .then((response) => {
         console.log(response);
-        history.push("/");
+        history.push("/login");
       })
       .catch((error) => console.log(error));
   };

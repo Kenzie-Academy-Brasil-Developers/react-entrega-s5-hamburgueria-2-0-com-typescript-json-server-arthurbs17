@@ -18,7 +18,7 @@ export const ContainerLogin = styled.button`
   height: 35px;
   border: 2px solid var(--green1);
   border-radius: 5px;
-  width: 100px;
+  width: 100%;
   transition: 0.5s;
   margin-top: 20px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);

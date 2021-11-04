@@ -10,5 +10,5 @@ export const ButtonAdd = ({ children, ...rest }: ButtonProps) => {
 };
 
 export const ButtonLogin = ({ children, ...rest }: ButtonProps) => {
-  return <ContainerLogin>{children}</ContainerLogin>;
+  return <ContainerLogin {...rest}>{children}</ContainerLogin>;
 };
