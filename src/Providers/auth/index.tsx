@@ -29,8 +29,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api
       .post("/login", userData)
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        setAuthToken(response.data.token);
+        localStorage.setItem("token", response.data.accessToken);
+        setAuthToken(response.data.accessToken);
+        console.log(response.data);
         history.push("/");
       })
       .catch((error) => console.log(error));

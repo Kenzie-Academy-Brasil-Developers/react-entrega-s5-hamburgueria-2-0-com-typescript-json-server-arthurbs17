@@ -2,8 +2,11 @@ import { IconButton, MenuItem } from "@mui/material";
 import { Badge } from "@mui/material";
 import { Logout, ShoppingCart } from "@mui/icons-material";
 import { Header, ButtonNav } from "./style";
+import { useAuth } from "../../Providers/auth";
 
 const MenuNav = () => {
+  const { logOut } = useAuth();
+
   return (
     <Header>
       <ButtonNav>
@@ -15,7 +18,7 @@ const MenuNav = () => {
             <ShoppingCart />
           </Badge>
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => logOut()}>
           <Logout />
         </IconButton>
       </MenuItem>

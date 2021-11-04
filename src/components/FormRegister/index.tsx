@@ -4,6 +4,7 @@ import schema from "./schema";
 import { TextField } from "@mui/material";
 import api from "../../Services/api";
 import { ButtonLogin } from "../Button/index";
+import { useHistory } from "react-router";
 
 interface handleRegisterProps {
   email: string;
@@ -25,6 +26,8 @@ const FormRegister = () => {
     formState: { errors },
   } = useForm<UserData>({ resolver: yupResolver(schema) });
 
+  const history = useHistory();
+
   const handleRegister = ({
     email,
     password,
@@ -32,7 +35,11 @@ const FormRegister = () => {
   }: handleRegisterProps) => {
     api
       .post("/register", { email, password, firstname })
-      .then((response) => console.log(response));
+      .then((response) => {
+        console.log(response);
+        history.push("/");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
