@@ -5,10 +5,12 @@ import { Header, ButtonNav } from "./style";
 import { useAuth } from "../../Providers/auth";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
+import { useCart } from "../../Providers/cart";
 
 const MenuNav = () => {
   const { authToken, logOut } = useAuth();
   const [status, setStatus] = useState(false);
+  const { cart } = useCart();
   const history = useHistory();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const MenuNav = () => {
           size="medium"
           color="inherit"
         >
-          <Badge badgeContent={0} color="secondary">
+          <Badge badgeContent={cart.length} color="secondary">
             <ShoppingCart />
           </Badge>
         </IconButton>

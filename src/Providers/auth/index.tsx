@@ -31,7 +31,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authToken, setAuthToken] = useState(
     () => localStorage.getItem("token") || ""
   );
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setUserId] = useState<string>(
+    () => localStorage.getItem("userId") || ""
+  );
 
   const signIn = (userData: SignInProps) => {
     api
@@ -41,8 +43,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setAuthToken(response.data.accessToken);
         const decode: Decode = jwt_decode(response.data.accessToken);
         console.log(decode);
+        localStorage.setItem("userId", decode.sub);
         setUserId(decode.sub);
         console.log(response.data);
+        console.log(userId);
         history.push("/home");
       })
       .catch((error) => console.log(error));
@@ -51,7 +55,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logOut = () => {
     localStorage.clear();
     setAuthToken("");
-    setUserId("");
     history.push("/");
   };
 

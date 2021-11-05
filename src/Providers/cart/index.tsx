@@ -10,7 +10,9 @@ import { useAuth } from "../auth";
 
 interface CartContextData {
   cart: any;
+  localCart: any;
   addToCart: (product: ProductsData) => void;
+  removeFromCart: (productId: number) => void;
 }
 
 interface CartProviderProps {
@@ -23,32 +25,41 @@ interface ProductsData {
   price: number;
   image: string;
   userId: string;
+  id?: number;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [cart, setCart] = useState([]);
-  const { authToken, userId } = useAuth();
+  const [cart, setCart] = useState<ProductsData[]>([]);
+  const [localCart, setLocalCart] = useState<ProductsData[]>([]);
+  const { authToken } = useAuth();
 
   const getCart = () => {
     api
-      .get(`/cart/${userId}`, {
-        headers: { Authorization: `Bearer ${authToken}` },
+      .get<ProductsData[]>(`/cart`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
       })
       .then((response) => {
         setCart(response.data);
+        console.log(`toke: ${authToken}`);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        console.log(`toke: ${authToken}`);
+      });
   };
 
   useEffect(() => {
     getCart();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localCart]);
 
   const addToCart = ({ ...product }: ProductsData) => {
     api
-      .post<ProductsData>(
+      .post<ProductsData[]>(
         "/cart",
         {
           name: product.name,
@@ -60,7 +71,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         { headers: { Authorization: `Bearer ${authToken}` } }
       )
       .then((response) => {
+        setLocalCart([...localCart, product]);
         console.log(response);
+        console.log(localCart);
+        console.log(cart);
         console.log(product);
       })
       .catch((error) => {
@@ -69,8 +83,22 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       });
   };
 
+  const removeFromCart = (productId: number) => {
+    api
+      .delete<ProductsData[]>(`/cart/${productId}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .then((response) => {
+        console.log(response);
+        setLocalCart(localCart.filter((product) => product.id !== productId));
+      })
+      .catch((error) => console.log(error, authToken, cart));
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider
+      value={{ cart, localCart, addToCart, removeFromCart }}
+    >
       {children}
     </CartContext.Provider>
   );

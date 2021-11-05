@@ -8,9 +8,16 @@ interface ProductCardProps {
   category: string;
   image: string;
   price: number;
+  id?: number;
 }
 
-const ProductCard = ({ name, category, image, price }: ProductCardProps) => {
+const ProductCard = ({
+  name,
+  category,
+  image,
+  price,
+  id,
+}: ProductCardProps) => {
   const { addToCart } = useCart();
   const { userId } = useAuth();
 
@@ -21,7 +28,7 @@ const ProductCard = ({ name, category, image, price }: ProductCardProps) => {
       <span>{category}</span>
       <p>R$: {price}</p>
       <ButtonAdd
-        onClick={() => addToCart({ name, category, image, price, userId })}
+        onClick={() => addToCart({ name, category, image, price, userId, id })}
       >
         Adicionar
       </ButtonAdd>

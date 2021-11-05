@@ -25,6 +25,7 @@ const ProductsList = () => {
               image={product.image}
               category={product.category}
               price={product.price}
+              id={product.id}
             />
           ))}
       </ContainerCard>
