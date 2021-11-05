@@ -16,7 +16,7 @@ const CardCart = ({ name, image, price, id }: CardCartProps) => {
       <img src={image} alt={name} />
       <p>{name}</p>
       <p> {price} </p>
-      <ButtonAdd onClick={() => removeFromCart(id)}>Remover</ButtonAdd>
+      <ButtonAdd onClick={() => removeFromCart(id)}>X</ButtonAdd>
     </Card>
   );
 };

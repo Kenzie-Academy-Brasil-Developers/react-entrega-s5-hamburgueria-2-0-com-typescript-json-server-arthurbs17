@@ -41,6 +41,7 @@ const FormLogin = () => {
         />
         <TextField
           label="Senha"
+          type="password"
           {...register("password")}
           size="small"
           margin="dense"

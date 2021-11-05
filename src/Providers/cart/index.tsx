@@ -13,6 +13,7 @@ interface CartContextData {
   localCart: any;
   addToCart: (product: ProductsData) => void;
   removeFromCart: (productId: number) => void;
+  getCart: () => void;
 }
 
 interface CartProviderProps {
@@ -73,12 +74,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       .then((response) => {
         setLocalCart([...localCart, product]);
         console.log(response);
-        console.log(localCart);
-        console.log(cart);
-        console.log(product);
       })
       .catch((error) => {
-        console.log(product);
         console.log(error);
       });
   };
@@ -97,7 +94,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, localCart, addToCart, removeFromCart }}
+      value={{ cart, localCart, addToCart, removeFromCart, getCart }}
     >
       {children}
     </CartContext.Provider>
